@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>لعبة تخمين الرقم</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      direction: rtl;
+      background: #222;
+      color: #fff;
+    }
+    .box {
+      margin-top: 80px;
+      background: #333;
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    input {
+      padding: 5px 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 5px 15px;
+      font-size: 16px;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+    #msg {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>لعبة تخمين الرقم 🎮</h1>
+    <p>اختر رقم من 1 إلى 10:</p>
+    <input type="number" id="guess" min="1" max="10">
+    <button onclick="check()">تحقق</button>
+    <button onclick="resetGame()">إعادة</button>
+    <p id="msg"></p>
+  </div>
+
+  <script>
+    let secret = Math.floor(Math.random() * 10) + 1;
+    let tries = ;
+
+    function check() {
+      const input = document.getElementById('guess');
+      const msg = document.getElementById('msg');
+      const value = Number(input.value);
+      if (!value) {
+        msg.textContent = 'اكتب رقم أولاً 🙂';
+        return;
+      }
+      tries++;
+      if (value === secret) {
+        msg.textContent = 'أحسنت! خمّنت الرقم بعد ' + tries + ' محاولة 🎉';
+      } else if (value < secret) {
+        msg.textContent = 'الرقم أكبر ⬆️';
+      } else {
+        msg.textContent = 'الرقم أصغر ⬇️';
+      }
+    }
+
+    function resetGame() {
+      secret = Math.floor(Math.random() * 10) + 1;
+      tries = ;
+      document.getElementById('guess').value = '';
+      document.getElementById('msg').textContent = 'تم بدء لعبة جديدة ✅';
+    }
+  </script>
+</body>
+</html>
