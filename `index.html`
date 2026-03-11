@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>لعبة تخمين الرقم</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>لعبة تخمين الرقم 🎯</h1>
+        <p>العب: الكمبيوتر اختار رقم بين 1 و 100، حاول تخمينه!</p>
+
+        <input type="number" id="guessInput" placeholder="اكتب رقم من 1 إلى 100">
+        <button id="guessButton">تخمين</button>
+
+        <p id="message"></p>
+        <p>عدد المحاولات: <span id="attempts"></span></p>
+
+        <button id="resetButton" style="display:none;">إعادة اللعب 🔁</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
