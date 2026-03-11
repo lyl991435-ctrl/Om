@@ -1,61 +1,49 @@
-let secretNumber;
-let attempts;
+let secretNumber = generateRandomNumber();
+let hasGuessed = false; // علشان نخليها محاولة واحدة فقط
 
-function startGame() {
-    // اختيار رقم عشوائي بين 1 و 100
-    secretNumber = Math.floor(Math.random() * 100) + 1;
-    attempts = ;
-
-    document.getElementById('attempts').textContent = attempts;
-    document.getElementById('message').textContent = '';
-    document.getElementById('guessInput').value = '';
-    document.getElementById('resetButton').style.display = 'none';
+function generateRandomNumber() {
+    // رقم عشوائي من 1 إلى 10
+    return Math.floor(Math.random() * 10) + 1;
 }
 
-function checkGuess() {
-    const input = document.getElementById('guessInput');
-    const message = document.getElementById('message');
-    const attemptsSpan = document.getElementById('attempts');
+const guessInput = document.getElementById('guessInput');
+const guessButton = document.getElementById('guessButton');
+const result = document.getElementById('result');
+const retryButton = document.getElementById('retryButton');
 
-    const userGuess = Number(input.value);
-
-    if (!userGuess || userGuess < 1 || userGuess > 100) {
-        message.textContent = 'من فضلك أدخل رقم صحيح بين 1 و 100.';
+guessButton.addEventListener('click', () => {
+    if (hasGuessed) {
+        result.textContent = 'انتهت محاولتك! اضغط "لعبة جديدة" لإعادة اللعب.';
         return;
     }
 
-    attempts++;
-    attemptsSpan.textContent = attempts;
+    const userGuess = Number(guessInput.value);
 
-    if (userGuess === secretNumber) {
-        message.textContent = `👏 أحسنت! خمّنت الرقم الصحيح ${secretNumber} بعد ${attempts} محاولة.`;
-        document.getElementById('resetButton').style.display = 'inline-block';
-    } else if (userGuess < secretNumber) {
-        message.textContent = 'الرقم أكبر من هذا 🔼';
-    } else {
-        message.textContent = 'الرقم أصغر من هذا 🔽';
+    if (!userGuess || userGuess < 1 || userGuess > 10) {
+        result.textContent = 'من فضلك أدخل رقمًا من 1 إلى 10.';
+        return;
     }
 
-    input.value = '';
-    input.focus();
-}
+    hasGuessed = true; // استخدم المحاولة الوحيدة
 
-// ربط الأزرار بالأحداث
-document.addEventListener('DOMContentLoaded', () => {
-    const guessButton = document.getElementById('guessButton');
-    const resetButton = document.getElementById('resetButton');
-    const input = document.getElementById('guessInput');
+    if (userGuess === secretNumber) {
+        result.textContent = `🎉 أحسنت! خمّنت الرقم الصحيح: ${secretNumber}`;
+        result.style.color = '#22c55e';
+    } else {
+        result.textContent = `❌ خطأ! الرقم الصحيح كان: ${secretNumber}`;
+        result.style.color = '#f97373';
+    }
 
-    guessButton.addEventListener('click', checkGuess);
-    resetButton.addEventListener('click', startGame);
+    // إظهار زر إعادة اللعب
+    retryButton.style.display = 'inline-block';
+});
 
-    // السماح بالضغط على Enter بدل الزر
-    input.addEventListener('keyup', (event) => {
-        if (event.key === 'Enter') {
-            checkGuess();
-        }
-    });
-
-    // بدء اللعبة أول مرة
-    startGame();
+// إعادة تشغيل اللعبة
+retryButton.addEventListener('click', () => {
+    secretNumber = generateRandomNumber();
+    hasGuessed = false;
+    result.textContent = '';
+    result.style.color = '#f9fafb';
+    guessInput.value = '';
+    retryButton.style.display = 'none';
 });
